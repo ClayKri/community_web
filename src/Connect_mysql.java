@@ -10,11 +10,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connect_mysql  extends HttpServlet {
-     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         // do nothing
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)  {
 
         String driver = "com.mysql.jbdc.Driver";
         String url = "jbdc:mysql://localhost :3306/forum?characterEncoding=utf-8";
@@ -28,7 +28,7 @@ public class Connect_mysql  extends HttpServlet {
                 //连接数据库
                 con = DriverManager.getConnection(url,user,password);
                 if(!con.isClosed()){
-                    System.out.println("数据库连接成功");
+                    System.out.println("库连接成功");
                 }
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
