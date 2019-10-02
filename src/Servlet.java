@@ -11,6 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Servlet extends HttpServlet {
 
@@ -31,21 +34,59 @@ public class Servlet extends HttpServlet {
                 responseStrBuilder.append(inputStr);
 
             JSONObject jsonObject = JSONObject.parseObject(responseStrBuilder.toString());
-
-            if (String.valueOf(jsonObject.get("cmd")).equals("0")) { // 如果 cmd = 0 返回 Hello world，否则返回 No
-                out.print("Hello World~!!~~!~!~!");
-                out.flush();
-                out.close();
-            } else {
-                out.print("No");
-                out.flush();
-                out.close();
+            if (jsonObject == null) {
+                return;
             }
+
+            connectSQL();
+//            String resultData = parseData(jsonObject);
+//            out.print(resultData);
+//            out.flush();
+//            out.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    private boolean connectSQL() {
+        String driver = "com.mysql.jbdc.Driver";
+        String url = "jbdc:mysql://localhost:3306/forum?characterEncoding=utf-8";
+        String user = "root";
+        String password = "12345";
+        Connection con = null;
+
+        try {
+            Class.forName(driver);
+            con = DriverManager.getConnection(url,user,password);
+            if(!con.isClosed()){
+                return true;
+            }
+        }   catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }   finally {
+            if (con != null) {
+
+            }
+        }
+
+        return false;
+
+    }
+
+    /**
+     * return client data
+     * @param jsonObject
+     * @return
+     */
+    private String parseData(JSONObject jsonObject) {
+        if (String.valueOf(jsonObject.get("cmd")).equals("0")) {
+            return "HelloWorld";
+        } else {
+            return "";
+        }
     }
 
 }
