@@ -1,18 +1,17 @@
 
 import com.alibaba.fastjson.JSONObject;
-
+import database.JDBCUtils;
+import utils.CloseUtils;
 
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Servlet extends HttpServlet {
@@ -38,7 +37,13 @@ public class Servlet extends HttpServlet {
                 return;
             }
 
-            connectSQL();
+            JDBCUtils jdbcUtils = new JDBCUtils();
+            Connection connection = jdbcUtils.getConnection();
+            if (connection != null) {
+                PreparedStatement statement = connection.prepareStatement("SELECT user_id FROM all_user");
+                statement.toString();
+            }
+
 //            String resultData = parseData(jsonObject);
 //            out.print(resultData);
 //            out.flush();
@@ -48,31 +53,6 @@ public class Servlet extends HttpServlet {
             e.printStackTrace();
         }
 
-
-    }
-
-    private boolean connectSQL() {
-        String driver = "com.mysql.jbdc.Driver";
-        String url = "jbdc:mysql://localhost:3306/forum?characterEncoding=utf-8";
-        String user = "root";
-        String password = "12345";
-        Connection con = null;
-
-        try {
-            Class.forName(driver);
-            con = DriverManager.getConnection(url,user,password);
-            if(!con.isClosed()){
-                return true;
-            }
-        }   catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }   finally {
-            if (con != null) {
-
-            }
-        }
-
-        return false;
 
     }
 
