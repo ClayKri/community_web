@@ -15,4 +15,12 @@
         <url-pattern>/Servlet</url-pattern>
     </servlet-mapping>
 
+    <resource-ref>
+        <description>Mysql 数据库连接池</description>
+        <res-ref-name>jdbc/mysqlds</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+
 </web-app>

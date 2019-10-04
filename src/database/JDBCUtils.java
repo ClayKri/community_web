@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class JDBCUtils {
 
-    private static final String DRIVER = "com.mysql.jbdc.Driver";
-    private static final String URL = "jbdc:mysql://localhost:3306/forum?characterEncoding=utf-8";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3306/community";
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
 
@@ -16,6 +16,7 @@ public class JDBCUtils {
     public JDBCUtils() {
         try {
             Class.forName(DRIVER);
+
             // connect database success
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

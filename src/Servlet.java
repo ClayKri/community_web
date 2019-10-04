@@ -9,10 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Servlet extends HttpServlet {
 
@@ -39,10 +36,10 @@ public class Servlet extends HttpServlet {
 
             JDBCUtils jdbcUtils = new JDBCUtils();
             Connection connection = jdbcUtils.getConnection();
-            if (connection != null) {
-                PreparedStatement statement = connection.prepareStatement("SELECT user_id FROM all_user");
-                statement.toString();
-            }
+            Statement statement = connection.createStatement();
+            boolean isSuccess = statement.execute("INSERT INTO all_user " +
+                    "VALUES (10001, 'Test', '123456', '15200001111', 'HelloWorld', '1000-00-00', 1, '广东省', 1, 1, 1, 1)");
+            System.out.println(isSuccess);
 
 //            String resultData = parseData(jsonObject);
 //            out.print(resultData);
